@@ -1,15 +1,15 @@
-#
 Summary:	Internet Relay Chat Services
+Summary(pl):	Us³ugi dla sieci IRC
 Name:		ircservices-ptlink
 Version:	2.23.6
 Release:	1
 License:	GPL v2
 Group:		Daemons
-Source0:  ftp://sunsite.dk/projects/ptlink/PTlink.Services%{version}.tar.gz
+Source0:	ftp://sunsite.dk/projects/ptlink/PTlink.Services%{version}.tar.gz
 # Source0-md5:	c952a18e181176c4af778bbe4893fa4b
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
-Patch0:	%{name}-path.patch
+Patch0:		%{name}-path.patch
 URL:		http://www.ptlink.net/Coders/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -31,14 +31,11 @@ Obsoletes:	ircservices-hybrid
 %define		_localstatedir	/var/lib/ircservices
 
 %description
-PTlink is an advanced IRC server, used by the Portuguese PTLink
-network It is fast, reliable, and powerful with good support for
-services.
+PTlink Services is a package of services for IRC networks.
 
 %description -l pl
-PTlink jest zaawansowanym serwerem IRC-a, u¿ywanym w portugalskiej
-sieci PTLink. Jest on szybki, niezawodny i potê¿ny, posiada dobre
-wsparcie dla us³ug.
+PTlink Services to pakiet z us³ugami dla sieci IRC (Internet Relay
+Chat).
 
 %prep
 %setup -q -n PTlink.Services%{version}
@@ -67,7 +64,7 @@ install data/example.conf	$RPM_BUILD_ROOT%{_sysconfdir}/services.conf
 install data/domain.def	$RPM_BUILD_ROOT%{_sysconfdir}/domain.def
 install data/nicks.plot	$RPM_BUILD_ROOT%{_sysconfdir}/nicks.plot
 install data/ptlink.motd	$RPM_BUILD_ROOT%{_sysconfdir}/ptlink.motd
-install src/lang/{en_us,pt,tr,de,it,nl,pt_br} $RPM_BUILD_ROOT%{_localstatedir}/languages/
+install src/lang/{en_us,pt,tr,de,it,nl,pt_br} $RPM_BUILD_ROOT%{_localstatedir}/languages
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/ircservices
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/ircservices
@@ -109,7 +106,7 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del ircservices
 fi
 
-%postun
+#%postun
 #if [ "$1" = "0" ]; then
 #	/usr/sbin/userdel ircservices 2> /dev/null
 #	/usr/sbin/groupdel ircservices 2> /dev/null

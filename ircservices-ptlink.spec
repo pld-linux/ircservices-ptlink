@@ -13,19 +13,22 @@ Patch0:		%{name}-path.patch
 URL:		http://www.ptlink.net/Coders/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	rpmbuild(macros) >= 1.159
 BuildRequires:	zlib-devel
 PreReq:		rc-scripts
-Requires(pre):	/usr/bin/getgid
 Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
-Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 Requires(post,preun):	/sbin/chkconfig
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Provides:	group(ircd)
+Provides:	user(ircd)
 Obsoletes:	ircservices
 Obsoletes:	ircservices6
 Obsoletes:	ircservices-hybrid
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/ircservices
 %define		_localstatedir	/var/lib/ircservices
@@ -106,11 +109,11 @@ if [ "$1" = "0" ]; then
 	/sbin/chkconfig --del ircservices
 fi
 
-#%postun
-#if [ "$1" = "0" ]; then
-#	/usr/sbin/userdel ircservices 2> /dev/null
-#	/usr/sbin/groupdel ircservices 2> /dev/null
-#fi
+%postun
+if [ "$1" = "0" ]; then
+	%userremove ircd
+	%groupremove ircd
+fi
 
 %files
 %defattr(644,root,root,755)

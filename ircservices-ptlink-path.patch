@@ -1,0 +1,54 @@
+diff -ur PTlink.Services2.23.6-orig/autoconf/configure.in PTlink.Services2.23.6/autoconf/configure.in
+--- PTlink.Services2.23.6-orig/autoconf/configure.in	2003-07-30 12:26:38.000000000 -0600
++++ PTlink.Services2.23.6/autoconf/configure.in	2003-09-05 15:36:48.000000000 -0600
+@@ -365,6 +365,6 @@
+ 
+   Paths set at include/path.h
+ "
+-echo "#define BINPATH \"${prefix}/bin\"" > include/path.h
+-echo "#define ETCPATH \"${prefix}/etc\"" >> include/path.h
+-echo "#define DATAPATH \"${prefix}/data\"" >> include/path.h
++echo "#define BINPATH \"${prefix}/sbin\"" > include/path.h
++echo "#define ETCPATH \"/etc/ircservices\"" >> include/path.h
++echo "#define DATAPATH \"/var/lib/ircservices\"" >> include/path.h
+diff -ur PTlink.Services2.23.6-orig/src/init.c PTlink.Services2.23.6/src/init.c
+--- PTlink.Services2.23.6-orig/src/init.c	2003-07-22 12:26:43.000000000 -0600
++++ PTlink.Services2.23.6/src/init.c	2003-09-05 15:36:48.000000000 -0600
+@@ -240,7 +240,7 @@
+ 
+ static void remove_pidfile(void)
+ {
+-    remove(ETCPATH "/" PIDFilename);
++    remove("/var/run/" PIDFilename);
+ }
+ 
+ /*************************************************************************/
+@@ -251,13 +251,13 @@
+ {
+     FILE *pidfile;
+ 
+-    pidfile = fopen(ETCPATH "/" PIDFilename, "w");
++    pidfile = fopen("/var/run/" PIDFilename, "w");
+     if (pidfile) {
+ 	fprintf(pidfile, "%d\n", (int)getpid());
+ 	fclose(pidfile);
+ 	atexit(remove_pidfile);
+     } else {
+-	log_perror("Warning: cannot write to PID file %s", ETCPATH "/" PIDFilename);
++	log_perror("Warning: cannot write to PID file %s", "/var/run/" PIDFilename);
+     }
+ }
+ 
+diff -ur PTlink.Services2.23.6-orig/src/log.c PTlink.Services2.23.6/src/log.c
+--- PTlink.Services2.23.6-orig/src/log.c	2003-07-22 12:26:44.000000000 -0600
++++ PTlink.Services2.23.6/src/log.c	2003-09-05 15:37:37.000000000 -0600
+@@ -34,7 +34,7 @@
+     time(&t);
+     tm = *localtime(&t);
+     strftime(buf, sizeof(buf)-1, "%Y%m%d", &tm);
+-    sprintf(fn,"logs/Services_%s.log",buf);
++    sprintf(fn,"/var/log/ircservices/Services_%s.log",buf);
+     strcpy(stamp,buf);
+     logfile = fopen(fn, "a");
+     if (logfile)
+Only in PTlink.Services2.23.6/src: log.c~

@@ -1,12 +1,12 @@
 Summary:	Internet Relay Chat Services
 Summary(pl):	Us³ugi dla sieci IRC
 Name:		ircservices-ptlink
-Version:	2.23.6
+Version:	2.25.1
 Release:	1
 License:	GPL v2
 Group:		Daemons
-Source0:	ftp://sunsite.dk/projects/ptlink/PTlink.Services%{version}.tar.gz
-# Source0-md5:	c952a18e181176c4af778bbe4893fa4b
+Source0:	ftp://sunsite.dk/projects/ptlink/services2/PTlink.Services%{version}.tar.gz
+# Source0-md5:	59df68440f40c7ef0e40090048fc7775
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-path.patch
@@ -45,13 +45,12 @@ Chat).
 %patch -p1
 
 %build
-mv -f autoconf/{configure.in,acconfig.h} .
 cp -f %{_datadir}/automake/config.* autoconf
+mv autoconf/configure.in .
 %{__aclocal}
 %{__autoconf}
 CFLAGS="%{rpmcflags} %{?debug:-DDEBUGMODE}"
 %configure
-echo '!SUB!THIS!' >> src/version.c.SH
 %{__make}
 %{__make} -C src/lang
 

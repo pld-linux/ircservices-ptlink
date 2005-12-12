@@ -15,14 +15,14 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	rpmbuild(macros) >= 1.202
 BuildRequires:	zlib-devel
-PreReq:		rc-scripts
+Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
-Requires(postun):	/usr/sbin/groupdel
-Requires(postun):	/usr/sbin/userdel
-Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 Provides:	group(ircd)
 Provides:	user(ircd)
 Obsoletes:	ircservices
@@ -59,7 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_libdir}/ircservices,%{_var}/log/ircservices,%{_sysconfdir}} \
 	$RPM_BUILD_ROOT%{_sbindir} \
 	$RPM_BUILD_ROOT{/etc/{rc.d/init.d,sysconfig},%{_localstatedir}/languages} \
-	$RPM_BUILD_ROOT%{_var}/log/ircservices/ 
+	$RPM_BUILD_ROOT%{_var}/log/ircservices/
 
 install src/services $RPM_BUILD_ROOT%{_sbindir}/ircservices
 install data/example.conf	$RPM_BUILD_ROOT%{_sysconfdir}/services.conf
@@ -105,9 +105,9 @@ fi
 %doc FAQ FEATURES CHANGES README
 %attr(755,root,root) %{_sbindir}/*
 %attr(770,root,ircd) %dir %{_sysconfdir}
-%attr(660,ircd,ircd) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/*
+%attr(660,ircd,ircd) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*
 %attr(754,root,root) /etc/rc.d/init.d/ircservices
-%config(noreplace) %verify(not size mtime md5) /etc/sysconfig/ircservices
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/ircservices
 %dir %{_libdir}/ircservices
 %dir %{_var}/log/ircservices
 %attr(770,root,ircd) %dir %{_var}/log/ircservices

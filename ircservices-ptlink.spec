@@ -1,5 +1,5 @@
 Summary:	Internet Relay Chat Services
-Summary(pl):	Us≥ugi dla sieci IRC
+Summary(pl.UTF-8):   Us≈Çugi dla sieci IRC
 Name:		ircservices-ptlink
 Version:	2.25.1
 Release:	1
@@ -36,8 +36,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 PTlink Services is a package of services for IRC networks.
 
-%description -l pl
-PTlink Services to pakiet z us≥ugami dla sieci IRC (Internet Relay
+%description -l pl.UTF-8
+PTlink Services to pakiet z us≈Çugami dla sieci IRC (Internet Relay
 Chat).
 
 %prep

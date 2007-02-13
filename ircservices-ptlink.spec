@@ -1,5 +1,5 @@
 Summary:	Internet Relay Chat Services
-Summary(pl.UTF-8):   Usługi dla sieci IRC
+Summary(pl.UTF-8):	Usługi dla sieci IRC
 Name:		ircservices-ptlink
 Version:	2.25.1
 Release:	1

@@ -42,7 +42,7 @@ Chat).
 
 %prep
 %setup -q -n PTlink.Services%{version}
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 cp -f %{_datadir}/automake/config.* autoconf
